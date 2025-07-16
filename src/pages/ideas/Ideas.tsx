@@ -96,16 +96,17 @@ const Ideas = () => {
       <div>
         <ParallaxBannerImage />
       </div>
-      <div className="w-[80%] mx-auto mt-10">
-        <div className="flex justify-between">
+      <div className="w-[80%] mx-auto mt-10 overflow-x-hidden">
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4 md:gap-10">
           {meta && (
-            <span>
-              showing {(meta.current_page - 1) * +meta.per_page + 1} -{" "}
+            <span className="text-sm text-gray-600">
+              Showing {(meta.current_page - 1) * +meta.per_page + 1} -{" "}
               {Math.min(meta.current_page * meta.per_page, meta.total)} of{" "}
               {meta.total}
             </span>
           )}
-          <div className="flex gap-10">
+
+          <div className="flex flex-col sm:flex-row sm:items-center gap-3 sm:gap-6">
             <DropdownMenuWithIcon
               label="Show per page:"
               options={[10, 20, 50]}
@@ -124,6 +125,7 @@ const Ideas = () => {
             />
           </div>
         </div>
+
         <IdeasList posts={posts} />
 
         {meta && (

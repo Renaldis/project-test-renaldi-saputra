@@ -8,7 +8,7 @@ import type { Post } from "../../types/post";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
 const IdeasItem = ({ post }: { post: Post }) => {
-  const formattedDate = new Date(post.updated_at.replace(" ", "T"))
+  const formattedDate = new Date(post.created_at.replace(" ", "T"))
     .toLocaleDateString("id-ID", {
       day: "numeric",
       month: "long",

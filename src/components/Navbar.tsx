@@ -1,10 +1,13 @@
 import { useLocation, useNavigate } from "react-router-dom";
 import navLinks from "../constants/NavLink";
 import { useEffect, useRef, useState } from "react";
+import { Sheet, SheetContent, SheetTrigger } from "../components/ui/sheet";
+import { Menu } from "lucide-react";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const [open, setOpen] = useState(false);
 
   const [showHeader, setShowHeader] = useState(true);
   const [isAtTop, setIsAtTop] = useState(true);
@@ -26,41 +29,92 @@ const Navbar = () => {
     window.addEventListener("scroll", handleScroll, { passive: true });
     return () => window.removeEventListener("scroll", handleScroll);
   }, []);
-
+  const handleNavigate = (path: string) => {
+    navigate(path);
+    setOpen(false);
+  };
   return (
     <div
       className={`
-      fixed py-2 top-0 left-0 w-full z-50 transition-transform duration-300
-      ${showHeader ? "translate-y-0" : "-translate-y-full"}
-      // ${
-        isAtTop
-          ? "bg-[#ff6600]/100 backdrop-blur-md"
-          : "bg-[#ff6600]/80 backdrop-blur-md"
-      }
-    `}
+        fixed top-0 left-0 w-full z-50 transition-transform duration-300 py-3
+        ${showHeader ? "translate-y-0" : "-translate-y-full"}
+        ${
+          isAtTop
+            ? "bg-[#ff6600]/100 backdrop-blur-md"
+            : "bg-[#ff6600]/80 backdrop-blur-md"
+        }
+      `}
     >
-      <div className="w-[85%] flex justify-between mx-auto items-center">
+      <div className="w-[90%] mx-auto flex justify-between items-center">
         <img
-          src="/src/assets/suitmedia-rmv.png"
+          src="/assets/suitmedia-rmv.png"
           alt="Suitmedia-Logo"
-          className="w-25"
+          className="w-28"
         />
-        <ul className="flex gap-6 text-slate-100  font-light me-5">
+
+        <ul className="hidden md:flex gap-6 text-slate-100 font-light">
           {navLinks.map((nav, index) => {
             const isActive = location.pathname === nav.path;
             return (
               <li
                 key={index}
-                className={`hover:transition-all ease-in-out hover:text-white duration-100 border-white pb-1 cursor-pointer hover:border-b-2 hover:font-extralight   ${
-                  isActive ? "border-b-4" : ""
+                className={`hover:text-white hover:font-light cursor-pointer border-b-2 pb-1 ${
+                  isActive ? "border-white" : "border-transparent"
                 }`}
                 onClick={() => navigate(nav.path)}
               >
-                <span>{nav.name}</span>
+                {nav.name}
               </li>
             );
           })}
         </ul>
+
+        <div className="md:hidden">
+          <Sheet open={open} onOpenChange={setOpen}>
+            <SheetTrigger className="text-white">
+              <Menu className="h-6 w-6" />
+            </SheetTrigger>
+            <SheetContent
+              side="right"
+              className="bg-white text-black px-6 py-6"
+            >
+              {/* Logo or Header */}
+              <div className="mb-8 flex justify-between items-center">
+                <img
+                  src="/assets/suitmedia-logo2.png"
+                  alt="Logo"
+                  className="w-24"
+                />
+              </div>
+
+              {/* Menu Links */}
+              <div className="flex flex-col gap-4">
+                {navLinks.map((nav, index) => {
+                  const isActive = location.pathname === nav.path;
+                  return (
+                    <button
+                      key={index}
+                      onClick={() => handleNavigate(nav.path)}
+                      className={`text-left px-2 py-2 rounded-md transition-colors duration-200
+                    ${
+                      isActive
+                        ? "font-semibold border-l-4 border-orange-500 bg-orange-50 text-orange-600"
+                        : "hover:bg-orange-100 text-gray-700"
+                    }
+                  `}
+                    >
+                      {nav.name}
+                    </button>
+                  );
+                })}
+              </div>
+
+              <div className="mt-10 text-sm text-gray-400">
+                © {new Date().getFullYear()} Suitmedia
+              </div>
+            </SheetContent>
+          </Sheet>
+        </div>
       </div>
     </div>
   );

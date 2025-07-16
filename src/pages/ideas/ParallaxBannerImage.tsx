@@ -5,7 +5,7 @@ const ParallaxBannerImage = () => {
     <div className="relative h-[400px] overflow-hidden">
       <div className="relative w-full h-full">
         <Parallax
-          bgImage="/src/assets/doodle.jpg"
+          bgImage="/assets/doodle.jpg"
           strength={300}
           bgImageAlt="Background Image"
         >
@@ -22,7 +22,7 @@ const ParallaxBannerImage = () => {
       </div>
 
       <svg
-        className="absolute top-40 bottom-0 left-0 w-full z-20"
+        className="absolute xl:top-40 bottom-0 left-0 w-full z-20"
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 1440 320"
         preserveAspectRatio="none"
