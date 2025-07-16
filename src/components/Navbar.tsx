@@ -30,12 +30,12 @@ const Navbar = () => {
   return (
     <div
       className={`
-      fixed top-0 left-0 w-full z-50 transition-transform duration-300
+      fixed py-2 top-0 left-0 w-full z-50 transition-transform duration-300
       ${showHeader ? "translate-y-0" : "-translate-y-full"}
       // ${
         isAtTop
           ? "bg-[#ff6600]/100 backdrop-blur-md"
-          : "bg-[#ff6600]/90 backdrop-blur-md"
+          : "bg-[#ff6600]/80 backdrop-blur-md"
       }
     `}
     >
@@ -43,7 +43,7 @@ const Navbar = () => {
         <img
           src="/src/assets/suitmedia-rmv.png"
           alt="Suitmedia-Logo"
-          className="w-30"
+          className="w-25"
         />
         <ul className="flex gap-6 text-slate-100  font-light me-5">
           {navLinks.map((nav, index) => {
