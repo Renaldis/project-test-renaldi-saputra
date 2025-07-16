@@ -2,7 +2,7 @@ import About from "../pages/About";
 import Careers from "../pages/Careers";
 import Contact from "../pages/Contact";
 import Home from "../pages/Home";
-import Ideas from "../pages/Ideas";
+import Ideas from "../pages/ideas/Ideas";
 import Services from "../pages/Services";
 
 const routes = [

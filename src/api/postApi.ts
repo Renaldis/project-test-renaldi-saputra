@@ -6,7 +6,7 @@ export const getPosts = async ({
   number = 1,
   size = 10,
   typeImage = ["small_image", "medium_image"],
-  published = "-published_at",
+  published = "published_at",
 }: {
   number?: number;
   size?: number;
