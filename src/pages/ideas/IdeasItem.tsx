@@ -1,4 +1,3 @@
-import { Loader2, LoaderCircle } from "lucide-react";
 import {
   Card,
   CardContent,
@@ -8,14 +7,6 @@ import {
 import type { Post } from "../../types/post";
 import { LazyLoadImage } from "react-lazy-load-image-component";
 
-const Spinner = () => {
-  return (
-    <div className="flex items-center justify-center">
-      <Loader2 className="h-6 w-6 animate-spin text-muted-foreground" />
-    </div>
-  );
-};
-
 const IdeasItem = ({ post }: { post: Post }) => {
   const formattedDate = new Date(post.updated_at.replace(" ", "T"))
     .toLocaleDateString("id-ID", {
@@ -24,15 +15,15 @@ const IdeasItem = ({ post }: { post: Post }) => {
       year: "numeric",
     })
     .toUpperCase();
-  console.log("Gambar:", post.medium_image?.[0]?.url);
+
   return (
     <Card className="rounded-sm p-0 overflow-hidden shadow-md gap-0">
       <CardHeader className="w-full p-0 m-0">
         <LazyLoadImage
-          src={
-            post.medium_image?.[0]?.url ??
-            "https://dummyimage.com/600x400/530fff/fff"
-          }
+          src={post.small_image?.[0]?.url}
+          onError={(e) => {
+            e.currentTarget.src = "https://dummyimage.com/600x400/f47119/fff";
+          }}
           alt={post.title}
           className="aspect-[3/2] w-full object-cover"
         />
