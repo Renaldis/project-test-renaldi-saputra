@@ -4,9 +4,17 @@ import { getPosts } from "../../api/postApi";
 import type { Post } from "../../types/post";
 import DropdownMenuWithIcon from "../../components/DropdownMenuWithIcon";
 import IdeasList from "./IdeasList";
+import {
+  ChevronLeft,
+  ChevronRight,
+  ChevronsLeft,
+  ChevronsRight,
+} from "lucide-react";
 
 const Ideas = () => {
   const [posts, setPosts] = useState<Post[]>([]);
+  const [meta, setMeta] = useState<any>(null);
+
   const [number, setNumber] = useState(1);
   const [size, setSize] = useState(10);
   const [typeImage, setTypeImage] = useState();
@@ -29,6 +37,7 @@ const Ideas = () => {
         });
 
         setPosts(res?.data);
+        setMeta(res.meta);
       } catch (error) {
         console.error("Gagal fetch data:", error);
         setError("Tidak dapat menampilkan data");
@@ -48,6 +57,8 @@ const Ideas = () => {
 
     setPublished(publish);
   };
+
+  console.log(meta);
 
   return (
     <div className="mb-20">
@@ -78,6 +89,71 @@ const Ideas = () => {
           </div>
         </div>
         <IdeasList posts={posts} />
+
+        {meta && (
+          <div className="flex justify-center items-center gap-2 mt-10 flex-wrap">
+            <button
+              onClick={() => setNumber(1)}
+              disabled={number === 1}
+              className={`px-2 py-1 border rounded disabled:opacity-50 ${
+                number !== 1 ? "font-extrabold" : ""
+              }`}
+            >
+              <ChevronsLeft strokeWidth={3} />
+            </button>
+
+            <button
+              onClick={() => setNumber((prev) => Math.max(1, prev - 1))}
+              disabled={number === 1}
+              className={`px-2 py-1 border rounded disabled:opacity-50 ${
+                number !== 1 ? "font-extrabold" : ""
+              }`}
+            >
+              <ChevronLeft strokeWidth={3} />
+            </button>
+
+            {Array.from({ length: 5 }, (_, i) => {
+              const startPage = Math.max(1, number - 2);
+              const page = startPage + i;
+
+              if (page > meta.last_page) return null;
+
+              return (
+                <button
+                  key={page}
+                  onClick={() => setNumber(page)}
+                  className={`px-3 py-1 border rounded ${
+                    number === page ? "bg-blue-500 text-white" : ""
+                  }`}
+                >
+                  {page}
+                </button>
+              );
+            })}
+
+            <button
+              onClick={() =>
+                setNumber((prev) => Math.min(meta.last_page, prev + 1))
+              }
+              disabled={number === meta.last_page}
+              className={`px-2 py-1 border rounded disabled:opacity-50 ${
+                number !== meta.last_page ? "font-extrabold" : ""
+              }`}
+            >
+              <ChevronRight strokeWidth={3} />
+            </button>
+
+            <button
+              onClick={() => setNumber(meta.last_page)}
+              disabled={number === meta.last_page}
+              className={`px-2 py-1 border rounded disabled:opacity-50 ${
+                number !== meta.last_page ? "font-extrabold" : ""
+              }`}
+            >
+              <ChevronsRight strokeWidth={3} />
+            </button>
+          </div>
+        )}
       </div>
     </div>
   );

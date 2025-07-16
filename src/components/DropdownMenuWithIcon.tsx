@@ -1,11 +1,12 @@
-import { GoTriangleDown } from "react-icons/go";
-import { GoTriangleUp } from "react-icons/go";
+import { GoTriangleDown, GoTriangleUp } from "react-icons/go";
+
 import {
   DropdownMenu,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
+import { useState } from "react";
 
 type DProp<T extends string | number> = {
   label: string;
@@ -20,12 +21,13 @@ const DropdownMenuWithIcon = <T extends string | number>({
   selected,
   onSelect,
 }: DProp<T>) => {
+  const [isOpen, setIsOpen] = useState(false);
   return (
     <div className="flex gap-2 items-center">
       <span>{label}</span>
-      <DropdownMenu>
+      <DropdownMenu open={isOpen} onOpenChange={setIsOpen}>
         <DropdownMenuTrigger className="flex gap-10 items-center border rounded-xl p-1 px-2">
-          {selected} <GoTriangleDown />
+          {selected} {isOpen ? <GoTriangleUp /> : <GoTriangleDown />}
         </DropdownMenuTrigger>
         <DropdownMenuContent>
           {options.map((value, index) => (
