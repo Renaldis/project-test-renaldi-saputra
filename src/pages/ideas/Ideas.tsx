@@ -123,7 +123,7 @@ const Ideas = () => {
                   key={page}
                   onClick={() => setNumber(page)}
                   className={`px-3 py-1 border rounded ${
-                    number === page ? "bg-blue-500 text-white" : ""
+                    number === page ? "bg-[#ff6600] text-white" : ""
                   }`}
                 >
                   {page}
